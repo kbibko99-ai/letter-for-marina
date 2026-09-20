@@ -1,0 +1,238 @@
+/* --- Общий фон страницы --- */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c4 100%);
+    font-family: 'Georgia', serif;
+    overflow: hidden;
+}
+
+/* --- Вступительная надпись --- */
+.intro {
+    text-align: center;
+    margin-bottom: 40px;
+    max-width: 600px;
+    padding: 0 20px;
+    animation: fadeInDown 1.2s ease;
+    transition: opacity 0.4s ease;
+}
+
+.intro h1 {
+    font-family: 'Georgia', serif;
+    font-size: 36px;
+    font-weight: normal;
+    font-style: italic;
+    color: #5a3e2b;
+    margin: 0 0 15px 0;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px rgba(176, 125, 79, 0.2);
+}
+
+.intro p {
+    font-family: 'Georgia', serif;
+    font-size: 17px;
+    color: #8a6a4f;
+    margin: 0;
+    line-height: 1.6;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
+
+.intro.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Обёртка конверта --- */
+.envelope-wrapper {
+    position: relative;
+    width: 420px;
+    height: 290px;
+    perspective: 1200px;
+    z-index: 10;
+}
+
+/* --- Сам конверт --- */
+#envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transition: transform 0.5s ease;
+}
+
+#envelope:hover {
+    transform: translateY(-5px);
+}
+
+/* --- Передняя часть (карман) --- */
+.front.pocket {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, #d4a373 0%, #b07d4f 100%);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    z-index: 3;
+}
+
+.front.pocket::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 210px solid transparent;
+    border-right: 210px solid transparent;
+    border-bottom: 170px solid #c08c5a;
+}
+
+/* --- Клапан (язычок) конверта --- */
+.front.flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, #c99363 0%, #a5723f 100%);
+    clip-path: polygon(0 0, 100% 0, 50% 55%);
+    border-radius: 8px 8px 0 0;
+    transform-origin: top;
+    transition: transform 0.7s ease 0.2s;
+    z-index: 4;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+#envelope.open .front.flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+/* --- Затемняющий фон --- */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 20, 10, 0.85);
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* --- Письмо --- */
+.letter {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    width: 90vw;
+    max-width: 700px;
+    height: 85vh;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    background: #fdfaf3;
+    background-image: repeating-linear-gradient(
+        transparent,
+        transparent 31px,
+        #e0d5c0 32px
+    );
+    border-radius: 6px;
+    padding: 40px 45px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    transition: transform 0.7s cubic-bezier(0.34, 1.4, 0.64, 1),
+                opacity 0.5s ease;
+    z-index: 100;
+    font-size: 18px;
+    line-height: 32px;
+    color: #3a2a1c;
+    font-family: 'Georgia', serif;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.letter.open {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Красивая прокрутка */
+.letter::-webkit-scrollbar {
+    width: 8px;
+}
+
+.letter::-webkit-scrollbar-track {
+    background: #f0e6d2;
+    border-radius: 4px;
+}
+
+.letter::-webkit-scrollbar-thumb {
+    background: #c08c5a;
+    border-radius: 4px;
+}
+
+.letter::-webkit-scrollbar-thumb:hover {
+    background: #a5723f;
+}
+
+.letter img {
+    max-width: 100%;
+    border-radius: 6px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+/* --- Кнопка "Открыть" --- */
+.reset {
+    margin-top: 40px;
+    z-index: 5;
+}
+
+#open {
+    padding: 14px 50px;
+    font-size: 17px;
+    font-family: 'Georgia', serif;
+    background: linear-gradient(160deg, #d4a373, #b07d4f);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(176, 125, 79, 0.4);
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+}
+
+#open:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(176, 125, 79, 0.6);
+}
+
+#open:active {
+    transform: translateY(0);
+}
