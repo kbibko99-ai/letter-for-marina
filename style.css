@@ -236,3 +236,63 @@ body {
 #open:active {
     transform: translateY(0);
 }
+/* ============================================ */
+/* МОБИЛЬНАЯ ВЕРСИЯ — только для телефонов      */
+/* ============================================ */
+@media (max-width: 768px) {
+
+    /* 1. Конверт — уменьшаем и добавляем поля по бокам */
+    .envelope-wrapper {
+        width: 80vw;
+        max-width: 320px;
+        height: 220px;
+    }
+
+    .front.pocket::after {
+        border-left: 160px solid transparent;
+        border-right: 160px solid transparent;
+        border-bottom: 130px solid #c08c5a;
+    }
+
+    /* 2. Вступительная надпись — уменьшаем */
+    .intro {
+        margin-bottom: 25px;
+        padding: 0 15px;
+    }
+
+    .intro h1 {
+        font-size: 26px;
+        letter-spacing: 1px;
+    }
+
+    .intro p {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    /* 3. Кнопка — чуть компактнее */
+    #open {
+        padding: 12px 40px;
+        font-size: 15px;
+    }
+
+    .reset {
+        margin-top: 25px;
+    }
+
+    /* 4. Письмо — уменьшаем шрифт и отступы */
+    .letter {
+        width: 92vw;
+        height: 80vh;
+        padding: 25px 20px;
+        font-size: 15px;
+        line-height: 26px;
+        border-radius: 8px;
+    }
+
+    /* 5. Фото — чтобы не были огромными */
+    .letter img {
+        max-width: 90%;
+        margin: 10px auto 20px;
+    }
+}
